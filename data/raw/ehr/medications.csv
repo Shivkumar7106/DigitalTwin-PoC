@@ -1,0 +1,52 @@
+patient_id,medication_name,rxnorm_code,dosage,frequency,start_date,status
+540b16b3-6a36-4bc5-b8b2-9c7e5413d448,Enalapril,3827,5 mg,Once daily,2025-02-25,active
+9eb3d8c5-f347-4e23-b0ab-5701c5cf298c,Amlodipine,17238,5 mg,Once daily,2025-03-15,active
+9eb3d8c5-f347-4e23-b0ab-5701c5cf298c,Atorvastatin,83367,20 mg,Once daily at bedtime,2025-03-15,active
+61c116a2-6ced-444a-8cd9-1443acd177a8,Metformin,860975,500 mg,Twice daily,2025-03-17,active
+61c116a2-6ced-444a-8cd9-1443acd177a8,Sitagliptin,312961,100 mg,Once daily,2025-03-17,active
+61c116a2-6ced-444a-8cd9-1443acd177a8,Enalapril,3827,5 mg,Once daily,2025-03-17,active
+61c116a2-6ced-444a-8cd9-1443acd177a8,Atorvastatin,83367,20 mg,Once daily at bedtime,2025-03-17,active
+45a82b03-512b-42ba-951a-7129e2235fa2,Metformin,860975,500 mg,Twice daily,2024-12-19,active
+9240cf94-0e3b-4e16-a7dc-3eb330817b39,Metformin,860975,500 mg,Twice daily,2026-06-11,active
+c81af35d-124a-436c-b3e6-f52a86a8229b,Enalapril,3827,5 mg,Once daily,2025-11-11,active
+d9c739c3-ec51-4321-a21c-867c3bb10ecb,Metformin,860975,500 mg,Twice daily,2026-01-21,active
+d9c739c3-ec51-4321-a21c-867c3bb10ecb,Enalapril,3827,5 mg,Once daily,2026-01-21,active
+d9c739c3-ec51-4321-a21c-867c3bb10ecb,Rosuvastatin,301542,10 mg,Once daily at bedtime,2026-01-21,active
+98530aed-9ed9-4470-9e07-52a94aad66fa,Amlodipine,17238,5 mg,Once daily,2026-01-02,active
+3f4a0bf3-bb6d-4cb5-a9c8-2d70b6e61450,Enalapril,3827,5 mg,Once daily,2026-04-05,active
+d494a30a-05d5-4421-9354-819e4cc427a0,Metformin,860975,500 mg,Twice daily,2024-12-24,active
+406a4294-eb0a-4949-b01d-2c98b316cfb9,Amlodipine,17238,5 mg,Once daily,2025-10-20,active
+1fe88e81-5244-4dc5-a152-227224436016,Telmisartan,141883,40 mg,Once daily,2025-01-17,active
+c92333d8-8f15-49a7-981f-513c657f815a,Rosuvastatin,301542,10 mg,Once daily at bedtime,2026-01-14,active
+26e5fe37-372b-4121-b1c6-cacda2dc09db,Metformin,860975,500 mg,Twice daily,2025-09-07,active
+26e5fe37-372b-4121-b1c6-cacda2dc09db,Sitagliptin,312961,100 mg,Once daily,2025-09-07,active
+523b3194-ef83-4f12-b7cc-3b5360586775,Atorvastatin,83367,20 mg,Once daily at bedtime,2025-11-14,active
+9ed560a5-791b-465f-a74d-69e48ccd14db,Rosuvastatin,301542,10 mg,Once daily at bedtime,2025-02-13,active
+171b0670-8c8b-4315-b3aa-3d3fa64279e7,Enalapril,3827,5 mg,Once daily,2024-11-25,active
+7d1f68b8-d6d3-4845-8eac-70c21cf6bd24,Metformin,860975,500 mg,Twice daily,2026-01-01,active
+7d1f68b8-d6d3-4845-8eac-70c21cf6bd24,Enalapril,3827,5 mg,Once daily,2026-01-01,active
+7d1f68b8-d6d3-4845-8eac-70c21cf6bd24,Rosuvastatin,301542,10 mg,Once daily at bedtime,2026-01-01,active
+35ed84f6-1498-4581-9f48-88fdd04de78b,Atorvastatin,83367,20 mg,Once daily at bedtime,2026-02-25,active
+c6538b32-29a5-4676-936b-4651275d129e,Metformin,860975,500 mg,Twice daily,2025-02-18,active
+c6538b32-29a5-4676-936b-4651275d129e,Telmisartan,141883,40 mg,Once daily,2025-02-18,active
+c6538b32-29a5-4676-936b-4651275d129e,Atorvastatin,83367,20 mg,Once daily at bedtime,2025-02-18,active
+f08d25e1-5c58-4e62-b6f5-3e738ae9d362,Metformin,860975,500 mg,Twice daily,2024-12-10,active
+57fbe6cb-f0c9-4bd2-bff3-a2b59d60bef4,Atorvastatin,83367,20 mg,Once daily at bedtime,2025-02-27,active
+447df1b3-b0a1-45c0-be4e-0efbff86d211,Amlodipine,17238,5 mg,Once daily,2026-04-28,active
+b7f60c23-c237-4d50-a520-9086ab829e1f,Metformin,860975,500 mg,Twice daily,2025-09-22,active
+b7f60c23-c237-4d50-a520-9086ab829e1f,Glimepiride,25255,2 mg,Once daily,2025-09-22,active
+b7f60c23-c237-4d50-a520-9086ab829e1f,Amlodipine,17238,5 mg,Once daily,2025-09-22,active
+b7f60c23-c237-4d50-a520-9086ab829e1f,Rosuvastatin,301542,10 mg,Once daily at bedtime,2025-09-22,active
+b1431eda-3d9b-46fe-9579-60524e0b2c89,Metformin,860975,500 mg,Twice daily,2025-12-27,active
+b1431eda-3d9b-46fe-9579-60524e0b2c89,Amlodipine,17238,5 mg,Once daily,2025-12-27,active
+b1431eda-3d9b-46fe-9579-60524e0b2c89,Rosuvastatin,301542,10 mg,Once daily at bedtime,2025-12-27,active
+7298bd55-e59f-4025-a867-9bd599bae5ab,Metformin,860975,500 mg,Twice daily,2025-06-11,active
+79c389e3-50aa-44ea-89c3-555d401188c5,Telmisartan,141883,40 mg,Once daily,2025-11-05,active
+3d9289af-f5c5-46c6-84a9-5671d046eecf,Metformin,860975,500 mg,Twice daily,2025-03-20,active
+3d9289af-f5c5-46c6-84a9-5671d046eecf,Atorvastatin,83367,20 mg,Once daily at bedtime,2025-03-20,active
+c471e30c-4053-45fb-8fe6-06b3f9e6d4c2,Metformin,860975,500 mg,Twice daily,2025-12-03,active
+c471e30c-4053-45fb-8fe6-06b3f9e6d4c2,Telmisartan,141883,40 mg,Once daily,2025-12-03,active
+c471e30c-4053-45fb-8fe6-06b3f9e6d4c2,Atorvastatin,83367,20 mg,Once daily at bedtime,2025-12-03,active
+6e682211-6bb0-476f-a68e-d8da66e5ce1e,Metformin,860975,500 mg,Twice daily,2026-03-04,active
+6e682211-6bb0-476f-a68e-d8da66e5ce1e,Atorvastatin,83367,20 mg,Once daily at bedtime,2026-03-04,active
+c4e2213f-f0f0-4423-b23a-f127cf0e83d3,Rosuvastatin,301542,10 mg,Once daily at bedtime,2025-09-13,active

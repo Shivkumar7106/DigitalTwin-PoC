@@ -1,0 +1,55 @@
+data_generation:
+  num_patients: 500
+  num_days: 30
+  sensor_interval_minutes: 5
+  output_dir: "data/raw"
+
+preprocessing:
+  glucose:
+    min_norm: 40
+    max_norm: 400
+  hrv_features: 
+    - "sdnn"
+    - "rmssd"
+    - "pnn50"
+  sliding_window:
+    window_size: 72
+    prediction_horizon: 24
+    stride: 6
+
+models:
+  glucose_predictor:
+    lstm_units: [64, 32]
+    attention: true
+    dropout: 0.2
+    epochs: 50
+    batch_size: 64
+    learning_rate: 0.001
+  cardio_risk:
+    xgboost_params:
+      max_depth: 6
+      learning_rate: 0.1
+      n_estimators: 100
+  fusion_model:
+    hidden_dims: [128, 64]
+    dropout: 0.3
+
+alerts:
+  glucose_thresholds:
+    critical_low: 54
+    low: 70
+    high: 180
+    critical_high: 300
+  cardio_risk_levels:
+    low: 0.2
+    moderate: 0.4
+    high: 0.6
+    critical: 0.8
+  hr_thresholds:
+    min: 40
+    max: 180
+
+dashboard:
+  page_title: "Digital Twin Healthcare PoC"
+  layout: "wide"
+  refresh_interval_seconds: 5

@@ -1,0 +1,97 @@
+patient_id,condition_code,condition_name,onset_date,status,severity
+83ba8c5b-66dc-4071-b3ba-092929e0b5b4,414916001,Obesity,2025-09-16,active,mild
+540b16b3-6a36-4bc5-b8b2-9c7e5413d448,38341003,Hypertension,2017-07-23,active,mild
+540b16b3-6a36-4bc5-b8b2-9c7e5413d448,53741008,Coronary Artery Disease,2021-07-21,active,mild
+540b16b3-6a36-4bc5-b8b2-9c7e5413d448,414916001,Obesity,2018-12-04,active,mild
+9eb3d8c5-f347-4e23-b0ab-5701c5cf298c,714628002,Prediabetes,2014-09-17,active,moderate
+9eb3d8c5-f347-4e23-b0ab-5701c5cf298c,38341003,Hypertension,2010-11-25,active,mild
+9eb3d8c5-f347-4e23-b0ab-5701c5cf298c,371073000,Dyslipidemia,2024-08-01,active,mild
+9eb3d8c5-f347-4e23-b0ab-5701c5cf298c,414916001,Obesity,2014-11-04,active,moderate
+fac5e09c-9c44-4a5b-b278-607220ec5226,714628002,Prediabetes,2013-09-09,active,mild
+61c116a2-6ced-444a-8cd9-1443acd177a8,44054006,Type 2 Diabetes Mellitus,2020-09-20,active,severe
+61c116a2-6ced-444a-8cd9-1443acd177a8,38341003,Hypertension,2022-11-25,active,moderate
+61c116a2-6ced-444a-8cd9-1443acd177a8,371073000,Dyslipidemia,2024-09-18,active,mild
+61c116a2-6ced-444a-8cd9-1443acd177a8,414916001,Obesity,2018-04-13,active,moderate
+45a82b03-512b-42ba-951a-7129e2235fa2,44054006,Type 2 Diabetes Mellitus,2011-03-04,active,mild
+9240cf94-0e3b-4e16-a7dc-3eb330817b39,44054006,Type 2 Diabetes Mellitus,2020-10-27,active,moderate
+9240cf94-0e3b-4e16-a7dc-3eb330817b39,414916001,Obesity,2022-08-19,active,mild
+c81af35d-124a-436c-b3e6-f52a86a8229b,38341003,Hypertension,2015-11-25,active,mild
+d9c739c3-ec51-4321-a21c-867c3bb10ecb,44054006,Type 2 Diabetes Mellitus,2020-04-26,active,moderate
+d9c739c3-ec51-4321-a21c-867c3bb10ecb,38341003,Hypertension,2021-07-27,active,moderate
+d9c739c3-ec51-4321-a21c-867c3bb10ecb,371073000,Dyslipidemia,2012-03-22,active,mild
+98530aed-9ed9-4470-9e07-52a94aad66fa,38341003,Hypertension,2022-01-21,active,mild
+98530aed-9ed9-4470-9e07-52a94aad66fa,414916001,Obesity,2025-12-23,active,moderate
+3f4a0bf3-bb6d-4cb5-a9c8-2d70b6e61450,38341003,Hypertension,2022-10-02,active,mild
+d494a30a-05d5-4421-9354-819e4cc427a0,44054006,Type 2 Diabetes Mellitus,2009-03-08,active,mild
+d494a30a-05d5-4421-9354-819e4cc427a0,414916001,Obesity,2010-05-13,active,mild
+406a4294-eb0a-4949-b01d-2c98b316cfb9,38341003,Hypertension,2021-10-02,active,moderate
+406a4294-eb0a-4949-b01d-2c98b316cfb9,414916001,Obesity,2018-10-18,active,mild
+1fe88e81-5244-4dc5-a152-227224436016,38341003,Hypertension,2019-10-02,active,mild
+1fe88e81-5244-4dc5-a152-227224436016,414916001,Obesity,2010-10-21,active,moderate
+c92333d8-8f15-49a7-981f-513c657f815a,371073000,Dyslipidemia,2022-01-27,active,mild
+c92333d8-8f15-49a7-981f-513c657f815a,414916001,Obesity,2016-03-29,active,mild
+410bf29c-03dc-42eb-879b-2f928a8eb064,414916001,Obesity,2024-02-14,active,moderate
+26e5fe37-372b-4121-b1c6-cacda2dc09db,44054006,Type 2 Diabetes Mellitus,2024-07-23,active,severe
+26e5fe37-372b-4121-b1c6-cacda2dc09db,414916001,Obesity,2020-11-11,active,moderate
+523b3194-ef83-4f12-b7cc-3b5360586775,371073000,Dyslipidemia,2019-07-17,active,mild
+523b3194-ef83-4f12-b7cc-3b5360586775,414916001,Obesity,2008-07-29,active,mild
+9ed560a5-791b-465f-a74d-69e48ccd14db,371073000,Dyslipidemia,2008-02-11,active,mild
+9ed560a5-791b-465f-a74d-69e48ccd14db,414916001,Obesity,2012-09-13,active,moderate
+8c3a4971-ca04-4f52-a436-da48971638a3,714628002,Prediabetes,2011-12-05,active,moderate
+8c3a4971-ca04-4f52-a436-da48971638a3,414916001,Obesity,2008-03-29,active,mild
+b64247d2-23de-43a7-9a90-25e512fb4df3,414916001,Obesity,2025-03-18,active,mild
+171b0670-8c8b-4315-b3aa-3d3fa64279e7,714628002,Prediabetes,2015-10-22,active,moderate
+171b0670-8c8b-4315-b3aa-3d3fa64279e7,38341003,Hypertension,2019-07-13,active,mild
+171b0670-8c8b-4315-b3aa-3d3fa64279e7,414916001,Obesity,2011-11-27,active,mild
+7d1f68b8-d6d3-4845-8eac-70c21cf6bd24,44054006,Type 2 Diabetes Mellitus,2018-02-11,active,moderate
+7d1f68b8-d6d3-4845-8eac-70c21cf6bd24,38341003,Hypertension,2019-03-20,active,mild
+7d1f68b8-d6d3-4845-8eac-70c21cf6bd24,371073000,Dyslipidemia,2013-12-15,active,mild
+7d1f68b8-d6d3-4845-8eac-70c21cf6bd24,414916001,Obesity,2013-05-07,active,mild
+35ed84f6-1498-4581-9f48-88fdd04de78b,714628002,Prediabetes,2016-06-28,active,mild
+35ed84f6-1498-4581-9f48-88fdd04de78b,371073000,Dyslipidemia,2024-12-20,active,moderate
+35ed84f6-1498-4581-9f48-88fdd04de78b,414916001,Obesity,2022-03-10,active,moderate
+c6538b32-29a5-4676-936b-4651275d129e,44054006,Type 2 Diabetes Mellitus,2024-12-30,active,moderate
+c6538b32-29a5-4676-936b-4651275d129e,38341003,Hypertension,2017-06-11,active,mild
+c6538b32-29a5-4676-936b-4651275d129e,371073000,Dyslipidemia,2017-09-08,active,mild
+c6538b32-29a5-4676-936b-4651275d129e,414916001,Obesity,2015-05-16,active,mild
+f08d25e1-5c58-4e62-b6f5-3e738ae9d362,44054006,Type 2 Diabetes Mellitus,2022-01-31,active,moderate
+f08d25e1-5c58-4e62-b6f5-3e738ae9d362,414916001,Obesity,2019-12-12,active,mild
+57fbe6cb-f0c9-4bd2-bff3-a2b59d60bef4,371073000,Dyslipidemia,2021-12-14,active,mild
+447df1b3-b0a1-45c0-be4e-0efbff86d211,714628002,Prediabetes,2022-12-23,active,moderate
+447df1b3-b0a1-45c0-be4e-0efbff86d211,38341003,Hypertension,2021-11-15,active,mild
+447df1b3-b0a1-45c0-be4e-0efbff86d211,414916001,Obesity,2021-10-13,active,moderate
+be0159b2-a101-436e-885e-311a2447bb52,414916001,Obesity,2020-07-25,active,moderate
+b7f60c23-c237-4d50-a520-9086ab829e1f,44054006,Type 2 Diabetes Mellitus,2022-09-28,active,severe
+b7f60c23-c237-4d50-a520-9086ab829e1f,38341003,Hypertension,2014-12-01,active,mild
+b7f60c23-c237-4d50-a520-9086ab829e1f,371073000,Dyslipidemia,2008-11-18,active,moderate
+b1431eda-3d9b-46fe-9579-60524e0b2c89,44054006,Type 2 Diabetes Mellitus,2021-01-20,active,moderate
+b1431eda-3d9b-46fe-9579-60524e0b2c89,38341003,Hypertension,2018-04-20,active,mild
+b1431eda-3d9b-46fe-9579-60524e0b2c89,371073000,Dyslipidemia,2017-10-11,active,mild
+b1431eda-3d9b-46fe-9579-60524e0b2c89,414916001,Obesity,2007-10-18,active,moderate
+7298bd55-e59f-4025-a867-9bd599bae5ab,44054006,Type 2 Diabetes Mellitus,2017-12-28,active,mild
+7298bd55-e59f-4025-a867-9bd599bae5ab,414916001,Obesity,2021-01-15,active,mild
+79c389e3-50aa-44ea-89c3-555d401188c5,714628002,Prediabetes,2016-01-13,active,mild
+79c389e3-50aa-44ea-89c3-555d401188c5,38341003,Hypertension,2020-12-20,active,mild
+79c389e3-50aa-44ea-89c3-555d401188c5,414916001,Obesity,2008-06-17,active,mild
+eb378b60-19d2-448c-99ad-991d90aecf88,714628002,Prediabetes,2010-02-09,active,mild
+eb378b60-19d2-448c-99ad-991d90aecf88,414916001,Obesity,2026-01-23,active,mild
+937da563-b504-4ff7-9671-4e453c5453a2,414916001,Obesity,2013-04-26,active,mild
+b8f85c1b-43f5-4c73-bd5d-889775159635,53741008,Coronary Artery Disease,2023-01-14,active,moderate
+3d9289af-f5c5-46c6-84a9-5671d046eecf,44054006,Type 2 Diabetes Mellitus,2019-05-07,active,moderate
+3d9289af-f5c5-46c6-84a9-5671d046eecf,371073000,Dyslipidemia,2020-06-27,active,mild
+e10ee72d-d659-4271-9ad0-92fcb6ec1843,414916001,Obesity,2025-09-02,active,mild
+29daa035-e8c2-489f-bb02-929fb8d94263,714628002,Prediabetes,2022-02-07,active,moderate
+29daa035-e8c2-489f-bb02-929fb8d94263,414916001,Obesity,2024-12-11,active,mild
+bc7f958b-9500-40a8-beb3-8fe2ec4d5bbf,414916001,Obesity,2010-04-26,active,moderate
+30c77d8f-f39b-4bde-8ad0-377253fc38e5,714628002,Prediabetes,2008-05-27,active,mild
+30c77d8f-f39b-4bde-8ad0-377253fc38e5,53741008,Coronary Artery Disease,2007-10-05,active,mild
+30c77d8f-f39b-4bde-8ad0-377253fc38e5,414916001,Obesity,2022-09-02,active,mild
+5a24e00f-2f9e-4335-a58d-cd3389669339,414916001,Obesity,2020-05-25,active,moderate
+c471e30c-4053-45fb-8fe6-06b3f9e6d4c2,44054006,Type 2 Diabetes Mellitus,2025-07-05,active,moderate
+c471e30c-4053-45fb-8fe6-06b3f9e6d4c2,38341003,Hypertension,2008-03-31,active,mild
+c471e30c-4053-45fb-8fe6-06b3f9e6d4c2,371073000,Dyslipidemia,2015-03-18,active,moderate
+6e682211-6bb0-476f-a68e-d8da66e5ce1e,44054006,Type 2 Diabetes Mellitus,2007-05-10,active,moderate
+6e682211-6bb0-476f-a68e-d8da66e5ce1e,371073000,Dyslipidemia,2017-01-13,active,moderate
+c4e2213f-f0f0-4423-b23a-f127cf0e83d3,714628002,Prediabetes,2021-10-18,active,mild
+c4e2213f-f0f0-4423-b23a-f127cf0e83d3,371073000,Dyslipidemia,2024-10-11,active,moderate
+c4e2213f-f0f0-4423-b23a-f127cf0e83d3,414916001,Obesity,2019-08-28,active,moderate
