@@ -117,24 +117,42 @@ class EHRPreprocessor:
         df = observations_df.copy()
         
         # Ensure datetime
-        if 'date' in df.columns:
-            df['date'] = pd.to_datetime(df['date'])
+        date_col = 'observation_date' if 'observation_date' in df.columns else ('date' if 'date' in df.columns else None)
+        if date_col:
+            df['obs_dt'] = pd.to_datetime(df[date_col])
+        else:
+            df['obs_dt'] = pd.Timestamp.now()
             
         # Sort by date to get latest easily
-        df = df.sort_values(by=['patient_id', 'date'])
+        df = df.sort_values(by=['patient_id', 'obs_dt'])
         
-        target_labs = ['hba1c', 'fasting_glucose', 'total_cholesterol', 'hdl', 'ldl', 
-                       'triglycerides', 'systolic_bp', 'diastolic_bp', 'creatinine', 'egfr', 'bmi_obs']
+        name_col = 'observation_name' if 'observation_name' in df.columns else ('observation_type' if 'observation_type' in df.columns else 'name')
+        
+        target_map = {
+            'hba1c': ['hba1c'],
+            'fasting_glucose': ['fasting blood glucose', 'fasting_glucose', 'glucose'],
+            'total_cholesterol': ['total cholesterol', 'total_cholesterol'],
+            'hdl': ['hdl cholesterol', 'hdl'],
+            'ldl': ['ldl cholesterol', 'ldl'],
+            'triglycerides': ['triglycerides'],
+            'systolic_bp': ['systolic blood pressure', 'systolic_bp'],
+            'diastolic_bp': ['diastolic blood pressure', 'diastolic_bp'],
+            'creatinine': ['creatinine'],
+            'egfr': ['egfr'],
+            'bmi_obs': ['bmi']
+        }
                        
         out_df = pd.DataFrame(index=patient_ids)
         out_df.index.name = 'patient_id'
         
-        for lab in target_labs:
-            # Assuming 'observation_type' and 'value' columns
-            lab_df = df[df['observation_type'].str.lower() == lab]
-            # Get latest per patient
-            latest_lab = lab_df.groupby('patient_id').tail(1).set_index('patient_id')['value']
-            out_df[lab] = latest_lab.reindex(out_df.index)
+        for feature_key, aliases in target_map.items():
+            mask = df[name_col].astype(str).str.lower().apply(lambda x: any(a in x for a in aliases))
+            lab_df = df[mask]
+            if not lab_df.empty:
+                latest_lab = lab_df.groupby('patient_id').tail(1).set_index('patient_id')['value']
+                out_df[feature_key] = latest_lab.reindex(out_df.index)
+            else:
+                out_df[feature_key] = np.nan
             
         # Median imputation for missing values
         out_df = out_df.fillna(out_df.median())
@@ -142,7 +160,7 @@ class EHRPreprocessor:
         # Derived features
         out_df['pulse_pressure'] = out_df['systolic_bp'] - out_df['diastolic_bp']
         out_df['cholesterol_ratio'] = out_df['total_cholesterol'] / out_df['hdl'].replace(0, np.nan)
-        out_df['cholesterol_ratio'].fillna(0, inplace=True)
+        out_df['cholesterol_ratio'] = out_df['cholesterol_ratio'].fillna(0)
         out_df['non_hdl_cholesterol'] = out_df['total_cholesterol'] - out_df['hdl']
         
         return out_df

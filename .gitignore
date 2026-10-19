@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+
+# Streamlit (keep config.toml)
+.streamlit/*
+!.streamlit/config.toml
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Heavy full-scale generated datasets (>100MB)
+data/generated_full/

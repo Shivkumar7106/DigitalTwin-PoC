@@ -112,10 +112,10 @@ def create_presentation_pptx():
     tf4 = tb4.text_frame
     tf4.word_wrap = True
     m_points = [
-        ("1. BiLSTM with Self-Attention (Glucose Spike Forecasting):", "Ingests 6-hour sliding windows (72 steps) to predict the next 2-hour trajectory (24 steps), forecasting spikes before onset."),
-        ("2. XGBoost with SHAP (ASCVD 10-Year Risk):", "Combines static clinical history with wearable biometric metrics (resting HR, nocturnal HRV, sleep efficiency) to predict cardiovascular risk with explainable attribution."),
-        ("3. Multi-Modal Intermediate Fusion Neural Network:", "A hybrid dual-branch architecture (temporal LSTM branch + static MLP branch) learning joint cross-modal risk representations."),
-        ("4. Clinical Alert Manager:", "Intelligent hysteresis debouncing across 4 triage tiers (Critical, High, Moderate, Info) to prevent alarm fatigue.")
+        ("1. BiLSTM with Self-Attention (Glucose Spike Forecasting):", "Ingests 6-hour sliding windows (72 steps) of patient CGM data to forecast 2-hour trajectories (24 steps), predicting glycemic excursions and meal-induced spikes before onset."),
+        ("2. ACC/AHA ASCVD Risk Model with Wearable Autonomic Telemetry:", "Evaluates 10-year cardiovascular event probability using patient longitudinal clinical factors (age, BP, cholesterol ratio, smoking, diabetes) fused with real-time wearable autonomic markers (nocturnal HRV RMSSD, resting HR)."),
+        ("3. Counterfactual 'What-If' Simulation Engine:", "Calculates personalized baseline-vs-scenario risk shifts from exercise, weight loss, and pharmacological titration (Statins, SGLT2i, ACEi) backed by clinical trial relative risk reductions."),
+        ("4. Clinical Alert Manager with Debouncing:", "Evaluates calculated live vitals and forecast extrema rather than static alerts, enforcing hysteresis cooldown windows (30 min) to prevent alarm fatigue.")
     ]
     for header, desc in m_points:
         p = tf4.add_paragraph()

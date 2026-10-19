@@ -277,7 +277,7 @@ Twin/
 ├── results/                          # Evaluation results & plots
 ├── dashboard/
 │   ├── app.py                        # Streamlit main entry point
-│   ├── pages/
+│   ├── views/
 │   │   ├── patient_overview.py       # Patient profile & vitals
 │   │   ├── glucose_monitoring.py     # Glucose prediction & alerts
 │   │   ├── cardio_risk.py            # Cardiovascular risk analysis

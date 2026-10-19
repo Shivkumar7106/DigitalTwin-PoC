@@ -83,17 +83,20 @@
 > *"Now let us demonstrate how an attending physician or cardiologist interacts with this virtual patient through our live clinician dashboard:*
 >
 > **1. Patient Overview Screen (0:00 - 1:30 of demo):**
-> *Notice the sidebar: we can query any patient in the cohort. Here on the Patient Overview, the clinician is immediately greeted by real-time vital summary cards—current glucose, heart rate, BP, and blood oxygen. Below, the system renders the patient's verified chronic condition tags (Type 2 Diabetes, Stage 1 Hypertension), active prescriptions, and quarterly lab panels with color-coded reference flags.*
+> *Notice the sidebar: we can select any verified patient in the cohort—such as Daksh Bakshi or Mahika Konda. Here on the Patient Overview, the clinician is immediately greeted by real-time vital summary cards computed directly from that individual's sensor stream—current interstitial glucose, resting heart rate, blood pressure, and oxygen saturation. Below, the system renders the patient's verified chronic condition problem list (Type 2 Diabetes, Stage 1 Hypertension), active medications, and quarterly lab panels with color-coded flags.*
 >
 > **2. Continuous Glucose Monitoring (1:30 - 3:00 of demo):**
-> *Switching to the Glucose Monitoring tab: Here is the heart of the predictive twin. The solid blue trace represents observed CGM telemetry over recent hours. The dashed red curve represents our Digital Twin's BiLSTM forecast 2 hours into the future, enveloped by 95% confidence intervals.*
-> *Notice this alert banner: 'Predicted glucose spike > 180 mg/dL in 45 minutes'. The system has already calculated that the patient's recent meal, combined with their current insulin sensitivity, will cause a hyper-glycemic event, enabling preemptive lifestyle or insulin titration.*
+> *Switching to the Glucose Monitoring tab: Here is the predictive twin in action. The solid blue trace displays the patient's observed CGM telemetry over the past 6 hours. Connected to this stream is our trained BiLSTM model, which generates a 2-hour forward forecast trajectory (dashed red line) with 95% confidence intervals.*
+> *The alert banner above is not a static placeholder—it evaluates the forecast array in real time. If any predicted timestep exceeds 180 mg/dL, it calculates the exact minutes until spike onset and warns the clinician to initiate glycemic or nutritional interventions.*
 >
-> **3. Cardiovascular Risk & Explainable AI (3:00 - 4:30 of demo):**
-> *Next, on the Cardiovascular Risk tab: We observe an interactive 10-year ASCVD risk gauge. But doctors do not trust black boxes. Below the gauge is a live SHAP waterfall plot showing exactly why the patient was classified at moderate-to-high risk—in this case, elevated nocturnal resting heart rate, reduced vagal HRV, and elevated systolic BP.*
+> **3. Cardiovascular Risk & Explainability (3:00 - 4:30 of demo):**
+> *Next, on the Cardiovascular Risk tab: We observe an ACC/AHA ASCVD 10-year risk gauge computed from the patient's actual age, systolic blood pressure, cholesterol ratio, smoking status, and diabetes diagnosis, combined with their wearable autonomic markers (nocturnal HRV RMSSD and resting heart rate). The waterfall plot breaks down the exact point contribution of each biomarker.*
 >
 > **4. 'What-If' Counterfactual Intervention Simulator (4:30 - 6:00 of demo):**
-> *Finally, our most powerful feature: the 'What-If' simulator. A clinician can simulate potential treatment plans. What if we advise the patient to perform 30 minutes of daily aerobic exercise, reduce HbA1c by 1%, and initiate an SGLT2 inhibitor? Clicking 'Run Simulation' instantly executes counterfactual inference, showing a side-by-side risk gauge comparison and projecting a substantial drop in cardiovascular hazard."*
+> *Finally, our What-If simulator demonstrates counterfactual clinical reasoning. Using the sliders on the left, we can adjust parameters—for example, adding 30 minutes of daily aerobic exercise, reducing HbA1c by 0.5%, losing 4 kg, or adding an SGLT2 inhibitor. Clicking 'Run Simulation' recalculates projected ASCVD hazard and systolic BP using clinical trial risk reduction factors, presenting a side-by-side baseline-versus-scenario comparison.*
+>
+> **5. Clinical Alert Management (6:00 of demo):**
+> *Under the Alerts tab, the system reviews active alerts evaluated dynamically from the patient's live telemetry and forecast values, applying hysteresis debouncing to prevent alarm fatigue.*"
 
 ---
 

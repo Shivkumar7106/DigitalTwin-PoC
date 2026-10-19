@@ -57,11 +57,16 @@ def create_glucose_timeline(timestamps, actual_glucose, predicted_glucose=None, 
                 name='Meal Event'
             ))
 
+    # Safely compute maximum value ignoring None
+    all_vals = [v for v in (list(actual_glucose or []) + list(predicted_glucose or [])) if v is not None and not (isinstance(v, float) and np.isnan(v))]
+    max_val = max(all_vals) if all_vals else 200.0
+    y_max = min(400.0, max(220.0, float(max_val) * 1.15))
+
     fig.update_layout(
         title='Glucose Timeline',
         xaxis_title='Time',
         yaxis_title='Glucose (mg/dL)',
-        yaxis=dict(range=[0, min(400, max(actual_glucose)*1.2)]),
+        yaxis=dict(range=[0, y_max]),
         template='plotly_white',
         hovermode='x unified'
     )

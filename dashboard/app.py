@@ -5,16 +5,29 @@ import random
 import pandas as pd
 import numpy as np
 
-# Add project root to path
+# Add project root and dashboard to path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pages.patient_overview import render_patient_overview
-from pages.glucose_monitoring import render_glucose_monitoring
-from pages.cardio_risk import render_cardio_risk
-from pages.what_if import render_what_if
-from pages.alerts import render_alerts
+from views.patient_overview import render_patient_overview
+from views.glucose_monitoring import render_glucose_monitoring
+from views.cardio_risk import render_cardio_risk
+from views.what_if import render_what_if
+from views.alerts import render_alerts
 
 st.set_page_config(page_title='Digital Twin - Healthcare PoC', layout='wide', page_icon='🏥')
+
+# Hide default multi-page navigation links at the top of the sidebar
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebarNav"] {
+        display: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 class DemoMode:
     def __init__(self):
@@ -44,10 +57,17 @@ engine = get_engine()
 
 # Load patients dynamically if available
 patients_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'raw', 'ehr', 'patients.csv')
+patient_label_map = {}
 if os.path.exists(patients_path):
     try:
         pts_df = pd.read_csv(patients_path)
-        available_patients = pts_df['patient_id'].tolist() if 'patient_id' in pts_df.columns else pts_df['id'].tolist()
+        id_col = 'patient_id' if 'patient_id' in pts_df.columns else 'id'
+        available_patients = pts_df[id_col].tolist()
+        for _, r in pts_df.iterrows():
+            pid = str(r[id_col])
+            name = f"{r.get('first_name', 'Patient')} {r.get('last_name', '')}".strip()
+            gender = str(r.get('gender', ''))[:1]
+            patient_label_map[pid] = f"{name} ({gender}) - {pid[:8]}"
     except Exception:
         available_patients = ["P001", "P002", "P003"]
 else:
@@ -60,17 +80,15 @@ if "simulation_running" not in st.session_state:
     st.session_state.simulation_running = False
 
 st.sidebar.title("🏥 Digital Twin PoC")
-patient = st.sidebar.selectbox("Select Patient", available_patients, index=available_patients.index(st.session_state.selected_patient))
+patient = st.sidebar.selectbox(
+    "Select Patient", 
+    available_patients, 
+    index=available_patients.index(st.session_state.selected_patient),
+    format_func=lambda pid: patient_label_map.get(pid, pid[:12])
+)
 st.session_state.selected_patient = patient
 
 page = st.sidebar.radio("Navigation", ["Patient Overview", "Glucose Monitoring", "Cardiovascular Risk", "What-If Simulator", "Alerts"])
-
-st.sidebar.markdown("---")
-st.sidebar.subheader("Simulation")
-if st.sidebar.button("Toggle Simulation"):
-    st.session_state.simulation_running = not st.session_state.simulation_running
-st.sidebar.write("Running: ", st.session_state.simulation_running)
-st.sidebar.slider("Speed Factor", 1, 10, 1)
 
 st.sidebar.markdown("---")
 st.sidebar.info("Digital Twin PoC v1.0")

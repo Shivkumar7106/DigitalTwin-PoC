@@ -85,13 +85,14 @@ class SensorPreprocessor:
         Extracts aggregate CGM features per patient.
         """
         df = cgm_df.copy()
+        col = 'glucose_mg_dl' if 'glucose_mg_dl' in df.columns else ('glucose_value' if 'glucose_value' in df.columns else 'glucose')
         features = []
         
         for pid, group in df.groupby('patient_id'):
-            glucose = group['glucose_value']
+            glucose = group[col] if col in group.columns else pd.Series([100.0])
             mean_glu = glucose.mean()
             std_glu = glucose.std()
-            cv_glu = std_glu / mean_glu if mean_glu > 0 else 0
+            cv_glu = (std_glu / mean_glu * 100) if mean_glu > 0 else 0
             
             tir_pct = ((glucose >= 70) & (glucose <= 180)).mean() * 100
             tbr_pct = (glucose < 70).mean() * 100
@@ -100,7 +101,6 @@ class SensorPreprocessor:
             num_spikes = (glucose > 180).sum()
             num_hypo_events = (glucose < 70).sum()
             
-            # Approximation for mean_postprandial_peak without meal data
             spikes = glucose[glucose > 180]
             mean_postprandial_peak = spikes.mean() if not spikes.empty else mean_glu
             
@@ -130,19 +130,22 @@ class SensorPreprocessor:
         if 'timestamp' in df.columns:
             df['timestamp'] = pd.to_datetime(df['timestamp'])
             
+        hr_col = 'heart_rate_bpm' if 'heart_rate_bpm' in df.columns else 'hr'
+        rmssd_col = 'hrv_rmssd_ms' if 'hrv_rmssd_ms' in df.columns else 'rmssd'
+        sdnn_col = 'hrv_sdnn_ms' if 'hrv_sdnn_ms' in df.columns else 'sdnn'
+            
         features = []
         for pid, group in df.groupby('patient_id'):
-            # Assuming 'hr', 'rmssd', 'sdnn' columns exist
-            hr = group.get('hr', pd.Series(dtype=float))
-            rmssd = group.get('rmssd', pd.Series(dtype=float))
-            sdnn = group.get('sdnn', pd.Series(dtype=float))
+            hr = group.get(hr_col, pd.Series(dtype=float))
+            rmssd = group.get(rmssd_col, pd.Series(dtype=float))
+            sdnn = group.get(sdnn_col, pd.Series(dtype=float))
             
             # Filter nighttime data (approx 10 PM to 6 AM)
             night_mask = (group['timestamp'].dt.hour >= 22) | (group['timestamp'].dt.hour < 6)
             day_mask = ~night_mask
             
-            mean_resting_hr = hr[night_mask].mean()
-            std_resting_hr = hr[night_mask].std()
+            mean_resting_hr = hr[night_mask].mean() if not hr[night_mask].empty else hr.mean()
+            std_resting_hr = hr[night_mask].std() if not hr[night_mask].empty else hr.std()
             
             mean_hrv_rmssd = rmssd.mean()
             std_hrv_rmssd = rmssd.std()
@@ -153,7 +156,7 @@ class SensorPreprocessor:
             min_hr = hr.min()
             hr_range = max_hr - min_hr
             
-            mean_daytime_hr = hr[day_mask].mean()
+            mean_daytime_hr = hr[day_mask].mean() if not hr[day_mask].empty else hr.mean()
             mean_nighttime_hr = mean_resting_hr
             
             features.append({
@@ -178,20 +181,30 @@ class SensorPreprocessor:
         Extracts aggregate sleep features per patient.
         """
         df = sleep_df.copy()
+        dur_col = 'total_sleep_min' if 'total_sleep_min' in df.columns else 'duration_minutes'
+        eff_col = 'sleep_efficiency_pct' if 'sleep_efficiency_pct' in df.columns else 'efficiency'
+        deep_col = 'deep_sleep_min' if 'deep_sleep_min' in df.columns else 'deep_sleep_pct'
+        rem_col = 'rem_sleep_min' if 'rem_sleep_min' in df.columns else 'rem_sleep_pct'
+        awk_col = 'awakenings' if 'awakenings' in df.columns else 'awakenings_count'
+        lat_col = 'sleep_onset_latency_min' if 'sleep_onset_latency_min' in df.columns else 'latency_minutes'
+
         features = []
         for pid, group in df.groupby('patient_id'):
-            mean_sleep_duration = group.get('duration_minutes', pd.Series([0])).mean()
-            std_sleep_duration = group.get('duration_minutes', pd.Series([0])).std()
-            mean_sleep_efficiency = group.get('efficiency', pd.Series([0])).mean()
-            mean_deep_sleep_pct = group.get('deep_sleep_pct', pd.Series([0])).mean()
-            mean_rem_sleep_pct = group.get('rem_sleep_pct', pd.Series([0])).mean()
-            mean_awakenings = group.get('awakenings_count', pd.Series([0])).mean()
-            mean_sleep_onset_latency = group.get('latency_minutes', pd.Series([0])).mean()
+            mean_sleep_duration = group.get(dur_col, pd.Series([0])).mean()
+            std_sleep_duration = group.get(dur_col, pd.Series([0])).std()
+            mean_sleep_efficiency = group.get(eff_col, pd.Series([0])).mean()
+            mean_deep_sleep_pct = group.get(deep_col, pd.Series([0])).mean()
+            mean_rem_sleep_pct = group.get(rem_col, pd.Series([0])).mean()
+            mean_awakenings = group.get(awk_col, pd.Series([0])).mean()
+            mean_sleep_onset_latency = group.get(lat_col, pd.Series([0])).mean()
             
             # Sleep regularity index (std of bedtime)
             if 'bedtime' in group.columns:
-                bedtimes = pd.to_datetime(group['bedtime']).dt.hour + pd.to_datetime(group['bedtime']).dt.minute / 60.0
-                sleep_regularity_index = bedtimes.std()
+                try:
+                    bedtimes = pd.to_datetime(group['bedtime']).dt.hour + pd.to_datetime(group['bedtime']).dt.minute / 60.0
+                    sleep_regularity_index = bedtimes.std()
+                except Exception:
+                    sleep_regularity_index = 0
             else:
                 sleep_regularity_index = 0
                 
