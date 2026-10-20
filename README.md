@@ -10,12 +10,11 @@
 
 | Role | Name | College/Incubator | Email |
 |------|------|-------------------|-------|
-| **Team Leader** | _[Your Name]_ | _[Your College]_ | _[Your Email]_ |
-| Member 2 | _[Name]_ | _[College]_ | _[Email]_ |
-| Member 3 | _[Name]_ | _[College]_ | _[Email]_ |
-| Member 4 | _[Name]_ | _[College]_ | _[Email]_ |
+| **Team Leader** |Shivkumar G| SJCE | shivumys2698@gmail.com |
+| Member 2 |Sharada SR | SJCE | sharadasanjay7410@gmail.com |
 
-> **Folder Name:** `TeamName_CollegeName`
+
+> **Folder Name:** `twinfr_SJCE`
 
 ---
 
@@ -300,9 +299,9 @@ Twin/
 
 ## 🎥 Video Demo & Presentation Script
 
-> **Video Presentation (20+ minutes):** [_Insert unlisted YouTube link or PowerPoint recording link here_]
+> **Video Presentation (20+ minutes):**https://youtu.be/XtqGpoZ1pvc
 >
-> 📜 **Complete 20-Minute Verbatim Script & Walkthrough Guide:** [docs/video_presentation_script.md](docs/video_presentation_script.md)
+> 📜 **Complete 20-Minute Verbatim Script & Walkthrough Guide:** https://1drv.ms/w/c/05c46bebc511535c/IQBX2S0BZyMkSKnlRHJXRXc9AXFAKGfVDfzMCBrFnVxUjOc?e=tbz0Dj(docs/video_presentation_script.md)
 
 The video covers:
 1. Problem statement and Indian chronic healthcare context
@@ -320,7 +319,7 @@ The video covers:
 All required competition deliverables are generated and ready in the repository:
 - **Architecture Diagram (PDF):** [docs/architecture_diagram.pdf](docs/architecture_diagram.pdf)
 - **Architecture Diagram (Markdown & Mermaid):** [docs/architecture_diagram.md](docs/architecture_diagram.md)
-- **Summit Presentation (PowerPoint PPTX):** [docs/presentation.pptx](docs/presentation.pptx)
+- **Summit Presentation (PowerPoint PPTX):** [docs/presentation.pptx]https://1drv.ms/p/c/05c46bebc511535c/IQB4RfBetWd1R7_EquAIyCTbAWRERG-YS7kfbwNvSRecbnY?e=Fdcv6G
 - **Summit Presentation (PDF):** [docs/presentation.pdf](docs/presentation.pdf)
 - **Clinical Evaluation Report:** [results/evaluation_report.md](results/evaluation_report.md)
 
