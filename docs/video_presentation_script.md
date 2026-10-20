@@ -1,129 +1,69 @@
-# 20-Minute Video Presentation Script & Demonstration Walkthrough
-
-**Summit:** Happiest Health Reimagining & Reforming Healthcare in India Summit – 2026, Bengaluru  
-**Project:** Digital Twin PoC – Predictive Health Engine for Type 2 Diabetes & Cardiovascular Risk  
-**Target Video Duration:** 20 to 25 minutes  
-**Format:** Slide Deck (PPTX/PDF) + Live System Demo of Dashboard  
-
----
-
-## ⏱️ Video Presentation Timeline Outline
-
-| Section | Timestamp | Topic / Focus | Visuals / Artifacts |
-| :--- | :--- | :--- | :--- |
-| **Part 1** | 00:00 – 03:00 | Introduction, Team Details & The Indian Chronic Epidemic | Slide 1 & 2 (`docs/presentation.pptx`) |
-| **Part 2** | 03:00 – 06:30 | Digital Twin Paradigm & Multi-Modal Data Ingestion | Slide 3 & Architecture Diagram |
-| **Part 3** | 06:30 – 11:00 | AI/ML Modeling: BiLSTM Attention, XGBoost SHAP, Fusion | Slide 4 & Technical Equations |
-| **Part 4** | 11:00 – 15:00 | Clinical Validation, Clarke Error Grid & Metric Benchmarks | Slide 5 & `results/` plots |
-| **Part 5** | 15:00 – 21:00 | Live System Demonstration: Clinician Dashboard & What-If | Live Browser (`http://localhost:8501`) |
-| **Part 6** | 21:00 – 23:30 | Regulatory Privacy (DPDP Act), Scaling & Future Roadmap | Slide 6 & 7 |
-| **Part 7** | 23:30 – 24:30 | Conclusion & Q&A Wrap-Up | Final Slide & GitHub Repository Link |
-
----
-
-## 🎙️ Verbatim Speaker Script
-
-### Part 1: Introduction, Team Details & The Indian Healthcare Challenge (00:00 – 03:00)
-> *"Good morning, esteemed jury members, technical evaluators, and delegates of the Happiest Health Reimagining and Reforming Healthcare in India Summit 2026.*
->
-> *Today, our team is proud to present our foundational prototype: the **Personalized Healthcare Digital Twin Engine**, specifically targeted at the dual chronic epidemics dominating India today: **Type 2 Diabetes** and **Cardiovascular Disease**.*
->
-> *As stated in recent ICMR-INDIAB epidemiology studies, India is home to over 101 million individuals diagnosed with Type 2 Diabetes and over 315 million suffering from Hypertension. Crucially, the South Asian demographic exhibits a unique metabolic profile often termed the 'thin-fat phenotype'—where high visceral adiposity and insulin resistance occur at lower BMI thresholds. Consequently, Indians develop diabetes and cardiovascular complications up to a decade earlier than Western counterparts.*
->
-> *The fundamental limitation of modern medicine is that it is reactive. Patients only consult clinicians when symptoms manifest or catastrophic events—such as acute myocardial infarction or diabetic hyperosmolar crises—have already occurred. Our challenge was to ask: **Can we create a dynamic, virtual replica of a patient that simulates their unique physiology in real time, predicting adverse events hours ahead and prescribing personalized interventions?** Let us explore how we built this foundational proof of concept."*
-
----
-
-### Part 2: Digital Twin Architecture & Dual Data Streams (03:00 – 06:30)
-> *(Transition to Architecture Diagram / Slide 3)*
->
-> *"A true Healthcare Digital Twin cannot function on static records alone, nor can it rely exclusively on noisy wearables. Our system achieves physiological fidelity through the fusion of two heterogeneous data streams:*
->
-> *1. **The Static/Historical Stream (EHR)**: Modeled using synthetic Indian patient profiles complying with HL7 FHIR standards. It encompasses demographics, chronic condition problem lists, active medications (Metformin, Statins, ACE inhibitors), and longitudinal quarterly laboratory panels (HbA1c, fasting glucose, lipid panels, eGFR, creatinine).*
->
-> *2. **The Dynamic/Real-Time Stream (Wearables & Medical IoT)**: Continuous high-frequency telemetry including Continuous Glucose Monitoring (CGM) sampled at 5-minute intervals, continuous Heart Rate and Heart Rate Variability (HRV indices: RMSSD, SDNN), sleep stage architecture (Wake, Light, Deep, REM), and diurnal step counts.*
->
-> *Under India's Digital Personal Data Protection (DPDP) Act and international HIPAA regulations, real patient data access is tightly restricted. To guarantee 100% regulatory compliance within the challenge sandbox, our entire system operates on clinically realistic synthetic data generators. We parameterized our generators with authentic physiological equations: modeling circadian dawn phenomena, postprandial glucose dynamics, nocturnal autonomic dipping, and exercise response curves."*
-
----
-
-### Part 3: Algorithmic Formulations & AI Models (06:30 – 11:00)
-> *(Transition to Model Architecture / Slide 4)*
->
-> *"At the core of the Digital Twin are three intelligent predictive models:*
->
-> *First, for **Continuous Glucose Spike Forecasting**, we deployed a **Bidirectional Long Short-Term Memory (BiLSTM) network equipped with a Self-Attention mechanism**. While standard recurrent networks suffer from forgetting distant temporal dynamics, our attention layer dynamically computes a normalized context weight across a 6-hour sliding window (72 timesteps). This allows the model to predict the continuous trajectory across the next 2-hour window (24 timesteps). If interstitial glucose is projected to exceed 180 mg/dL or rise faster than 3 mg/dL/min, a predictive alert is triggered.*
->
-> *Second, for **Cardiovascular Risk Assessment**, we developed an **XGBoost gradient boosting classifier coupled with SHAP (SHapley Additive exPlanations)**. Rather than relying solely on static Framingham scores, our model ingests 35 multi-modal features—incorporating dynamic nocturnal HRV suppression, resting heart rate spikes, and sleep fragmentation alongside systolic BP and total cholesterol.*
->
-> *Third, we constructed a **Multi-Modal Intermediate Fusion Neural Network**, featuring a temporal LSTM branch fused with a static clinical dense branch via a gated cross-modal layer. Finally, our **Clinical Alert Manager** applies debouncing and hysteresis logic across four triage tiers (Critical, High, Moderate, Info) to prevent clinician alarm fatigue."*
-
----
-
-### Part 4: Clinical Validation & Quantitative Benchmarks (11:00 – 15:00)
-> *(Transition to Results Slide 5 & `results/` Figures)*
->
-> *"In clinical AI, standard mathematical metrics like mean squared error do not capture clinical danger. A model that underestimates glucose by 40 mg/dL in a hypoglycemic patient is fatal.*
->
-> *Therefore, we validated our glucose forecasting engine using **Clarke Error Grid Analysis (CEGA)**. As displayed on the plot from our evaluation pipeline:*
-> - *Our model achieved **99.60% of predictions in Clarke Zones A and B**, far exceeding the 95% clinical standard.*
-> - *The **Mean Absolute Relative Difference (MARD)** is **7.47%**, satisfying the strict <10% threshold required for clinical-grade continuous glucose monitors.*
-> - *The Root Mean Square Error (RMSE) is **10.31 mg/dL** over the 2-hour forecasting window.*
->
-> *For our Cardiovascular Risk Scorer:*
-> - *The model attained an **AUC-ROC of 0.965** and a **Precision-Recall AUC of 0.968**.*
-> - *Crucially for medical triage, **Sensitivity (Recall) is 89.80%**, minimizing life-threatening false negatives, while maintaining a **Specificity of 89.39%** to avoid overburdening emergency staff.*
-> - *Our complete automated test suite executed with 100% pass rates."*
-
----
-
-### Part 5: Live Clinician Dashboard Demonstration (15:00 – 21:00)
-> *(Screen Share: Open web browser to `http://localhost:8501`)*
->
-> *"Now let us demonstrate how an attending physician or cardiologist interacts with this virtual patient through our live clinician dashboard:*
->
-> **1. Patient Overview Screen (0:00 - 1:30 of demo):**
-> *Notice the sidebar: we can select any verified patient in the cohort—such as Daksh Bakshi or Mahika Konda. Here on the Patient Overview, the clinician is immediately greeted by real-time vital summary cards computed directly from that individual's sensor stream—current interstitial glucose, resting heart rate, blood pressure, and oxygen saturation. Below, the system renders the patient's verified chronic condition problem list (Type 2 Diabetes, Stage 1 Hypertension), active medications, and quarterly lab panels with color-coded flags.*
->
-> **2. Continuous Glucose Monitoring (1:30 - 3:00 of demo):**
-> *Switching to the Glucose Monitoring tab: Here is the predictive twin in action. The solid blue trace displays the patient's observed CGM telemetry over the past 6 hours. Connected to this stream is our trained BiLSTM model, which generates a 2-hour forward forecast trajectory (dashed red line) with 95% confidence intervals.*
-> *The alert banner above is not a static placeholder—it evaluates the forecast array in real time. If any predicted timestep exceeds 180 mg/dL, it calculates the exact minutes until spike onset and warns the clinician to initiate glycemic or nutritional interventions.*
->
-> **3. Cardiovascular Risk & Explainability (3:00 - 4:30 of demo):**
-> *Next, on the Cardiovascular Risk tab: We observe an ACC/AHA ASCVD 10-year risk gauge computed from the patient's actual age, systolic blood pressure, cholesterol ratio, smoking status, and diabetes diagnosis, combined with their wearable autonomic markers (nocturnal HRV RMSSD and resting heart rate). The waterfall plot breaks down the exact point contribution of each biomarker.*
->
-> **4. 'What-If' Counterfactual Intervention Simulator (4:30 - 6:00 of demo):**
-> *Finally, our What-If simulator demonstrates counterfactual clinical reasoning. Using the sliders on the left, we can adjust parameters—for example, adding 30 minutes of daily aerobic exercise, reducing HbA1c by 0.5%, losing 4 kg, or adding an SGLT2 inhibitor. Clicking 'Run Simulation' recalculates projected ASCVD hazard and systolic BP using clinical trial risk reduction factors, presenting a side-by-side baseline-versus-scenario comparison.*
->
-> **5. Clinical Alert Management (6:00 of demo):**
-> *Under the Alerts tab, the system reviews active alerts evaluated dynamically from the patient's live telemetry and forecast values, applying hysteresis debouncing to prevent alarm fatigue.*"
-
----
-
-### Part 6: DPDP Regulatory Compliance & Future Roadmap (21:00 – 23:30)
-> *(Transition to Slide 6 & 7)*
->
-> *"As we look toward real-world deployment across hospital networks in India, four pillars guide our roadmap:*
->
-> *1. **Regulatory Alignment**: The architecture is designed from the ground up for privacy-by-design under India's DPDP Act 2023, featuring local edge tokenization and federated learning compatibility.*
-> *2. **Device Interoperability**: Seamless integration with ISO/IEEE 11073 standards for consumer wearables (smartwatches, commercial CGMs).*
-> *3. **Closed-Loop Feedback**: Moving beyond predictive alerts to closed-loop automated insulin delivery systems and automated clinician communication.*
-> *4. **Summit Showcase 2026**: We are prepared to bring this functional prototype to the summit in Bengaluru on November 20, 2026, demonstrating live wearable ingestion on stage."*
-
----
-
-### Part 7: Conclusion & Summary (23:30 – 24:30)
-> *"In conclusion, our Digital Twin proof of concept proves that proactive, predictive medicine in India is not a distant vision—it is technically feasible today.*
->
-> *Our complete codebase, training pipelines, evaluation reports, and live dashboard are fully reproducible and accessible in our public GitHub repository under the MIT open-source license.*
->
-> *Thank you to Happiest Health for spearheading this initiative. We look forward to answering your questions."*
-
----
-
-## 📹 Recording & Production Checklist
-
-1. **Resolution & Audio:** Record in 1080p (1920x1080) at 30/60 fps with a dedicated noise-canceling microphone.
-2. **Dashboard Setup:** Ensure `py -3.11 -m streamlit run dashboard/app.py` is running smoothly at `http://localhost:8501`.
-3. **Screen Layout:** Present slides in full-screen (`F5` in PowerPoint) and toggle to browser for Section 5 without window borders.
-4. **Export Format:** Save video as `.mp4`, upload to YouTube as **Unlisted**, and paste the link into `README.md`.
+Digital Twin PoC — Final Matched Narration
+Single narrator • Target recording 26–28 minutes including navigation and pauses • Slides and script numbered identically. Narration is based on the repository and screenshots supplied on 20 October 2026.
+RECORDING: Keep the localhost Streamlit app running. Present slides 1–10, switch to the browser for slides 11–15, then return to slides 16–18. Timing is an approximate pacing guide, not a guarantee; rehearse and add genuine explanation or interaction if needed to exceed 20 minutes.
+SLIDE 01  |  THE FUTURE OF CARE IS PREDICTIVE
+Target segment: 0:00–1:20  •  Visual: Digital Twin PoC | Type 2 Diabetes & Cardiovascular Risk
+Good morning, respected judges and everyone joining this presentation. Imagine two patients with exactly the same glucose reading right now. One is stable; the other is about to experience a sharp rise. A conventional snapshot may look identical, but their trajectories tell very different stories. That gap between a measurement and an understanding of what might happen next is the motivation for our project. Today I am presenting Digital Twin PoC: a predictive health engine focused on glucose forecasting and cardiovascular risk assessment. This is a working research prototype, not a clinically approved product. I will walk through the healthcare problem, the data and technical architecture, the machine-learning components and reported evaluation, then demonstrate the application running locally. Finally, I will discuss what this proof of concept establishes and what still needs validation. The central question throughout is simple: can we connect a patient's history with changing physiological signals to produce more useful, personalized insights?
+SLIDE 02  |  THE PROBLEM
+Target segment: 1:20–2:45  •  Visual: Healthcare data is fragmented • Monitoring is often reactive • Trends matter
+Chronic conditions do not evolve only during hospital visits. Glucose fluctuates after meals and activity; heart rate and sleep patterns change across the day. Meanwhile, diagnoses, laboratory results and medications may be stored separately from wearable measurements. A single value is valuable, but it can be misleading when separated from context. Consider glucose at 96 milligrams per deciliter. The number alone does not tell us whether it is rising, falling or likely to remain stable. The same applies to cardiovascular assessment: blood pressure, metabolic status, lifestyle and other variables matter together. Our challenge is not merely to put several charts on a screen. It is to link longitudinal measurements to a patient-specific representation, calculate model-based forecasts, and communicate results in a way that a human can inspect. We aim to demonstrate that workflow using synthetic data, so no actual patient records are required for this prototype.
+SLIDE 03  |  WHAT IS A HEALTHCARE DIGITAL TWIN?
+Target segment: 2:45–4:10  •  Visual: Clinical history + simulated sensor streams → virtual patient state → forecasts & scenarios
+A Digital Twin is a computational representation that is updated using information about a physical system. In healthcare, a digital twin can represent selected aspects of an individual's state and support analysis over time. Our implementation is deliberately narrower than a full simulation of human physiology. It is a data-driven patient-state and prediction platform. One stream provides relatively static information, such as demographics, diagnoses and clinical measurements. Another stream provides time-varying measurements such as glucose, heart rate, HRV, sleep and activity. These are processed into a patient-specific state. From that state, our application exposes glucose forecasts, a cardiovascular risk estimate, scenario analysis and alerts. The word twin matters because these outputs are organized around an individual profile, rather than an anonymous average. The word proof of concept matters equally: the present sensor readings are simulated, and the system is not making validated clinical decisions.
+SLIDE 04  |  OUR SOLUTION
+Target segment: 4:10–5:25  •  Visual: Five connected experiences: Overview • Glucose • Cardiovascular • What-If • Alerts
+We designed the experience around five questions. First, who is the selected patient and what is their current simulated health context? The overview answers that. Second, where is glucose heading? The glucose monitoring view combines historical values and a two-hour forecast. Third, what is the estimated cardiovascular risk, and what model inputs appear to influence it? That is the cardiovascular view. Fourth, what changes in the model estimate when we alter exercise, weight, HbA1c or other hypothetical interventions? The What-If simulator supports that exploration. Fifth, does the current simulated state trigger an alert, and what historical events have been logged? The alert-management view addresses this. Together these screens form one coherent workflow. They are not five independent mockups: the interface is organized around the selected simulated patient.
+SLIDE 05  |  SYSTEM ARCHITECTURE
+Target segment: 5:25–7:05  •  Visual: Generate → Ingest → Process → Model & twin state → Streamlit dashboard
+The repository describes a layered architecture. At the source layer are synthetic electronic health records and simulated wearable signals. An ingestion layer loads and validates records and time-series streams. Preprocessing and feature engineering prepare demographics, laboratory values and derived sensor summaries for modeling. The Digital Twin core then coordinates patient state, predictive models and alert logic. Finally, a Streamlit dashboard built with interactive Plotly visualizations presents the results. This separation is useful for engineering. We can change a data source without redesigning every chart, and we can test predictive components separately from the interface. The repository also contains dedicated source folders for data generation, ingestion, preprocessing, models, digital-twin orchestration, evaluation and tests. In this demonstration, the application runs on localhost. Local hosting does not mean the interface is only a picture; it is a running application in the browser. It does mean we should not claim it is a production cloud deployment.
+SLIDE 06  |  DATA STRATEGY
+Target segment: 7:05–8:35  •  Visual: 500 synthetic profiles • 30-day simulated wearable streams • No real patient data
+Healthcare data is sensitive, so our prototype uses synthetic patient records and simulated sensor measurements. The repository documents a cohort of 500 generated patient profiles and 30-day sensor data. Clinical records include demographic and health-related fields, while simulated streams cover continuous glucose monitoring, heart rate and HRV, sleep and physical activity. Glucose values are generated at five-minute intervals. Those intervals are important because six hours of readings give 72 time steps, which can be used to construct model input windows. We also extract aggregated features, such as trends or summaries, from the wearable streams. This makes it possible to combine static context and temporal information. Synthetic data gives us a controlled environment for exercising the pipeline and avoiding patient privacy exposure. But it also has an important drawback: good performance on simulated patterns does not automatically transfer to real patients, devices or clinical workflows. That limitation shapes how we present the results.
+SLIDE 07  |  GLUCOSE FORECASTING
+Target segment: 8:35–10:15  •  Visual: BiLSTM + Attention | 72 historical steps → 24 future steps
+Our glucose prediction architecture uses a bidirectional long short-term memory network with an attention mechanism. Why a sequence model? Because glucose is not just a value; it is a pattern unfolding over time. The repository specifies a six-hour input window, sampled every five minutes, corresponding to 72 time steps. It also specifies a two-hour output horizon, or 24 future five-minute predictions. Features described in the project include glucose level, rate of change, meal and exercise flags, rolling statistics and medication timing. An LSTM learns temporal relationships within a sequence. Bidirectional processing extracts context from both directions within the available historical input window; it does not use future observations from the forecast horizon. Attention helps the network weight informative portions of that input. The forecast can then be compared against a high-glucose threshold of 180 milligrams per deciliter. This provides a foundation for anticipatory alerts, but the output is an estimate rather than a measurement or a clinical instruction.
+SLIDE 08  |  CARDIOVASCULAR ASSESSMENT
+Target segment: 10:15–11:40  •  Visual: Risk score + explainable contributions + wearable context
+The cardiovascular component combines clinical context with physiological summaries. The repository documents XGBoost and SHAP as the risk-model and explainability approach. XGBoost is a tree-based ensemble method often used for structured features. The dashboard that we will demonstrate shows a ten-year ASCVD-style risk gauge and a chart explicitly labeled SHAP-style hazard contribution. That label is important: I will describe what the displayed attribution represents without assuming every bar is an independently verified SHAP calculation. The purpose of explainability here is to let us inspect how the model represents different risk factors, not to prove a causal relationship. For instance, a positive contribution associated with a diabetes indicator means that indicator raises the displayed model estimate relative to its reference. It does not establish that changing that one field would produce an equivalent real-world health outcome.
+SLIDE 09  |  MULTI-MODAL FUSION & ALERTS
+Target segment: 11:40–13:05  •  Visual: LSTM temporal branch + MLP clinical branch | Severity-based alerts
+A third model in the documented architecture is a multi-modal fusion network. Its temporal branch is designed to process wearable time-series information using an LSTM, while its static branch processes clinical tabular features through an MLP. The branches are combined to produce a shared representation. This is an important architectural idea: a patient's history and present trajectory are different types of information, and they benefit from different processing pathways. Alongside the models is an alert engine. The repository describes severity levels and cooldown behavior to reduce repeated notifications. In the interface, we can inspect active alert counts and a simulated audit trail. An alerting system must be designed carefully, because too many warnings create alarm fatigue, while missed warnings can be dangerous. For now, we demonstrate the software behavior in a simulated environment. We do not claim the alerts have been clinically validated.
+SLIDE 10  |  REPORTED MODEL EVALUATION
+Target segment: 13:05–14:35  •  Visual: Glucose RMSE 10.31 mg/dL • CVD AUC-ROC 0.9648
+The repository includes a published evaluation report. For glucose prediction it reports a root mean square error of 10.31 milligrams per deciliter, a mean absolute error of 8.36, a mean absolute relative difference of 7.47 percent, and 99.60 percent of evaluated points in Clarke Error Grid zones A and B. For cardiovascular scoring, it reports an AUC-ROC of 0.9648, PR-AUC of 0.9676, sensitivity of 0.8980 and specificity of 0.8939. These are useful prototype evaluation results. RMSE penalizes larger numerical errors, while AUC-ROC describes class discrimination over decision thresholds. But we must be precise about what they mean. They are the values recorded in the repository's evaluation report; they are not evidence of prospective clinical effectiveness. To establish real-world reliability we would need independent external datasets, careful leakage checks, calibration studies, subgroup analysis and clinical testing. The strength of this proof of concept is that it provides an end-to-end testable pipeline and an evaluation framework.
+SLIDE 11  |  LIVE DEMO | PATIENT OVERVIEW
+Target segment: 14:35–16:00  •  Visual: Switch to localhost • Select patient • Read vitals and clinical context
+Now I will switch from the presentation to the actual running application. I am opening our local Streamlit dashboard. On the left is the patient selector and the five navigation sections. For a consistent walkthrough I am selecting the same simulated patient shown in our screenshots: Daksh Bakshi, a 36-year-old male. On this overview the current simulated glucose is 96 milligrams per deciliter, heart rate 68 beats per minute, blood pressure 120 over 73 and oxygen saturation 98 percent. The BMI is 27.3. The overview also shows a clinical profile and active conditions, including prediabetes and obesity. Notice the distinction between patient context and instantaneous readings: the profile provides background, while the values at the top provide a snapshot. This is the first layer of the digital twin. [ACTION: slowly point to each vital, scroll to the clinical profile, then return to the navigation.] I will now move to the glucose view to show how the application adds a time dimension to that snapshot.
+SLIDE 12  |  LIVE DEMO | GLUCOSE FORECAST
+Target segment: 16:00–18:00  •  Visual: 96.0 now • 81.2 at 30 min • 84.5 at 2 hours • TIR 95.8%
+On the glucose monitoring page, the current displayed value is 96 milligrams per deciliter. The interface shows a 30-minute forecast of 81.2 and a two-hour forecast of 84.5 milligrams per deciliter for this simulated patient. It also reports time in range of 95.8 percent. The green message indicates that the two-hour predicted trajectory stays within the stated target band of 70 to 180. Let me scroll to the timeline. [ACTION: scroll slowly to the glucose chart.] The solid blue portion shows historical glucose values, the dashed orange portion represents the forecast, and the yellow markers identify meal events. This is a clearer story than a single number: we can see what the signal did, when a meal was marked and how the model projects the next two hours. [PAUSE: move cursor across the historical-to-forecast boundary.] Below that is the 30-day summary. The mean is 99.1, coefficient of variation is 13.1 percent, time above 180 is zero percent and time below 70 is 4.2 percent. That last number matters: despite a stable current forecast, some past simulated readings were below range. We should not confuse one reassuring prediction with a claim that the patient has no risk. This screen demonstrates trend visualization, prediction and contextual summary working together.
+SLIDE 13  |  LIVE DEMO | CARDIOVASCULAR RISK
+Target segment: 18:00–19:40  •  Visual: 12% displayed ten-year ASCVD-style risk • Moderate category • Attribution
+Next is cardiovascular risk assessment. For the selected simulated patient, the gauge displays a 12 percent ten-year ASCVD-style risk and labels it moderate. The gauge is easy to interpret at a glance, but I want to draw your attention to the chart on the right. It is titled SHAP-style hazard contribution. The bars show which features are represented as contributing to the displayed estimate. We can see factors such as resting heart rate, HRV, diabetes status, smoking, cholesterol ratio, blood pressure and age. [ACTION: point to the largest displayed bars.] The value of this interface is not just that it gives a number, but that it invites us to examine the inputs behind that number. There is also an important verification point before submission: the patient overview lists prediabetes, while this attribution label shows Type 2 diabetes as yes. We are checking that condition mapping so the narrative and the model inputs are consistent. I will not present this simulated 12 percent score as a medically validated individual prognosis. It is a model-generated risk display for our proof of concept.
+SLIDE 14  |  LIVE DEMO | WHAT-IF SIMULATOR
+Target segment: 19:40–22:05  •  Visual: Change intervention controls • Compare baseline 12% to simulated 8.8%
+Now we reach the most interactive part of the prototype: the What-If counterfactual intervention simulator. On the left are controls for aerobic exercise, target HbA1c reduction, target weight loss, smoking cessation where applicable, and pharmacological additions or titrations. On the right are the baseline and simulated future risk gauges. With the settings shown in our example, the baseline is 12 percent and the simulated value is 8.8 percent. That is a difference of 3.2 percentage points, or about 26.7 percent relative to the baseline. [ACTION: show current slider positions: exercise 30 minutes, HbA1c reduction 0.5, weight loss 4 kilograms. Scroll to the Run Simulation button.] I will adjust one control so you can see how the application responds. [ACTION: change exercise to a different value; click Run Simulation; wait for output.] The key point is not any single percentage. It is the ability to explore the model's response to hypothetical changes in a patient-specific context. I will now show the baseline-versus-counterfactual biomarker comparison below the gauges. [ACTION: scroll and point to comparison chart.] These projections are scenario outputs, not measured treatment effects, and they should never be used as medication instructions. In fact, the repository currently includes language about validated clinical relative-risk models and a calculated number needed to treat. Those stronger claims require separate evidence and should be qualified in the final submission. This is an exploratory simulation feature, not a clinical prescription engine.
+SLIDE 15  |  LIVE DEMO | ALERT MANAGEMENT
+Target segment: 22:05–23:35  •  Visual: 0 active alerts • Four severity levels • Simulated historical audit trail
+Finally, I will open the alert-management page. The top of the screen groups alerts into four categories: critical, high priority, moderate priority and information or routine. For this selected simulated patient, all four current counters are zero. The green status message says there are no active clinical alerts, with glucose 96, heart rate 68 and cardiovascular risk 12 percent shown within the application's configured limits. That is an important point: zero alerts is not a missing feature. It is a legitimate state when the current conditions do not trigger the alert rules. [ACTION: pause on the four zero counters and the green status banner.] Below is a simulated audit trail and historical alert log. It contains prior informational events such as sleep and activity records. [ACTION: scroll enough to show timestamp, severity, category and event description columns.] The repository describes cooldown and hysteresis mechanisms intended to avoid repeated notifications. Our prototype demonstrates the alert-management interface and simulated event logging, not a medically certified real-time monitoring service. With that, we have completed the five-section walkthrough of the working application.
+SLIDE 16  |  WHY THIS PROTOTYPE MATTERS
+Target segment: 23:35–24:40  •  Visual: Unified patient context • Forward-looking insights • Inspectable outputs • Scenario exploration
+Stepping back from the interface, the contribution of this project is the integration of several ideas into one coherent demonstration. We connect patient history with simulated wearable signals. We use time-series modeling to produce glucose forecasts. We present a cardiovascular risk estimate with an interpretable contribution display. We let users explore hypothetical interventions and see the model-generated differences. And we provide an alert view with severity categories and an audit trail. Each component has limitations on its own, but the integration illustrates how a digital-twin workflow could support more informed monitoring in the future. Importantly, the prototype is inspectable: there is a repository with source modules, model descriptions, evaluation artifacts and a locally running dashboard. The project is a foundation for research and engineering iteration rather than a finished healthcare product.
+SLIDE 17  |  LIMITATIONS & NEXT STEPS
+Target segment: 24:40–25:55  •  Visual: Synthetic data → external validation → secure device/EHR integration → clinical evaluation
+Our roadmap begins with the most important limitation: the data is synthetic. Future work should evaluate the models on properly consented, representative and independent patient datasets. The second step is integration with real, authorized data sources, including clinical records and compatible sensors. That requires authentication, privacy safeguards, interoperability and robust error handling. Third, we need stronger model validation: calibration, uncertainty reporting, subgroup performance, data-drift monitoring and prospective evaluation. Fourth, we need clinical and human-factors review of the alerts and What-If scenarios. This includes preventing false reassurance, excessive warnings and misleading intervention claims. Before any medical use, applicable regulatory requirements and clinical oversight would also need to be addressed. These are not small tasks, and we do not suggest they are complete. They are the steps required to turn a technically promising proof of concept into something dependable in real-world care.
+SLIDE 18  |  THANK YOU
+Target segment: 25:55–26:40  •  Visual: From isolated readings to a patient-specific predictive view
+To conclude, our project asks whether we can move from isolated health measurements toward a connected, forward-looking patient view. We built a working Digital Twin proof of concept that brings together synthetic clinical records, simulated physiological streams, predictive modeling, scenario exploration and alert management. Today you saw both the architecture described in our repository and the interface running on localhost. The reported model metrics are encouraging in the prototype environment, while real-world clinical reliability remains to be established. Our next goal is to improve consistency, validation and integration, while preserving the transparency of the system. Thank you for your time and consideration. We welcome your questions.
+Repository alignment & checks before recording
+•	MATCH: Five dashboard sections in README match supplied screenshots.
+•	MATCH: README specifies 500 synthetic patients, 30 days, BiLSTM + Attention, XGBoost + SHAP, fusion network, and alert engine.
+•	MATCH: Reported evaluation figures match results/evaluation_report.md.
+•	CHECK: Patient overview lists prediabetes, but cardiovascular attribution screenshot says Type 2 Diabetes=Yes. Verify data mapping before claiming consistency.
+•	CHECK: Cardiovascular screen labels SHAP-style contribution. Confirm whether actual SHAP values drive the plotted bars; avoid calling them validated SHAP explanations otherwise.
+•	CHECK: What-If UI uses phrase validated clinical relative risk models and computes NNT; this script treats outcomes as unvalidated simulated projections.
+•	CHECK: README has placeholder team details, placeholder demo link, old event naming and example clone URL. Update these before final submission.
+•	CHECK: Glucose TIR 95.8% and below-range 4.2% coexist. Do not claim no prior low-glucose events.
+•	CHECK: Alerts show zero active for the example patient; historical audit entries are simulated, not proof of real-time clinical monitoring.
+•	LIMIT: Screenshots and public repository were inspected; no live localhost execution or complete source-code audit was possible.
+Sources checked: github.com/Shivkumar7106/DigitalTwin-PoC (README), results/evaluation_report.md, dashboard/views/cardio_risk.py, dashboard/views/what_if.py; six supplied interface screenshots.
