@@ -45,33 +45,39 @@ class DemoMode:
         noise = np.random.normal(0, 5, 100)
         return {"timestamps": times, "actual": base + noise, "predicted": base + noise + 2}
 
+@st.cache_data
+def load_available_patients():
+    patients_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'raw', 'ehr', 'patients.csv')
+    patient_label_map = {}
+    if os.path.exists(patients_path):
+        try:
+            pts_df = pd.read_csv(patients_path)
+            id_col = 'patient_id' if 'patient_id' in pts_df.columns else 'id'
+            available_patients = pts_df[id_col].tolist()
+            for _, r in pts_df.iterrows():
+                pid = str(r[id_col])
+                name = f"{r.get('first_name', 'Patient')} {r.get('last_name', '')}".strip()
+                gender = str(r.get('gender', ''))[:1]
+                patient_label_map[pid] = f"{name} ({gender}) - {pid[:8]}"
+            return available_patients, patient_label_map
+        except Exception:
+            return ["P001", "P002", "P003"], {}
+    return ["P001", "P002", "P003"], {}
+
+available_patients, patient_label_map = load_available_patients()
+
 @st.cache_resource
 def get_engine():
     try:
         from src.digital_twin.twin_engine import DigitalTwinEngine
-        return DigitalTwinEngine()
+        eng = DigitalTwinEngine()
+        if available_patients:
+            eng.warmup(available_patients[0])
+        return eng
     except Exception as e:
         return DemoMode()
 
 engine = get_engine()
-
-# Load patients dynamically if available
-patients_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'raw', 'ehr', 'patients.csv')
-patient_label_map = {}
-if os.path.exists(patients_path):
-    try:
-        pts_df = pd.read_csv(patients_path)
-        id_col = 'patient_id' if 'patient_id' in pts_df.columns else 'id'
-        available_patients = pts_df[id_col].tolist()
-        for _, r in pts_df.iterrows():
-            pid = str(r[id_col])
-            name = f"{r.get('first_name', 'Patient')} {r.get('last_name', '')}".strip()
-            gender = str(r.get('gender', ''))[:1]
-            patient_label_map[pid] = f"{name} ({gender}) - {pid[:8]}"
-    except Exception:
-        available_patients = ["P001", "P002", "P003"]
-else:
-    available_patients = ["P001", "P002", "P003"]
 
 # Session State
 if "selected_patient" not in st.session_state or st.session_state.selected_patient not in available_patients:
@@ -86,7 +92,10 @@ patient = st.sidebar.selectbox(
     index=available_patients.index(st.session_state.selected_patient),
     format_func=lambda pid: patient_label_map.get(pid, pid[:12])
 )
-st.session_state.selected_patient = patient
+if patient != st.session_state.selected_patient:
+    st.session_state.selected_patient = patient
+    if hasattr(engine, 'warmup'):
+        engine.warmup(patient)
 
 page = st.sidebar.radio("Navigation", ["Patient Overview", "Glucose Monitoring", "Cardiovascular Risk", "What-If Simulator", "Alerts"])
 

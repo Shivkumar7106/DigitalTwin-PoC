@@ -14,10 +14,7 @@ def render_glucose_monitoring(engine, patient_id: str):
     if cgm_df.empty:
         st.error(f"No continuous glucose monitoring sensor data found for patient {patient_id}.")
         return
-        
-    cgm_df['timestamp'] = pd.to_datetime(cgm_df['timestamp'])
-    cgm_df = cgm_df.sort_values('timestamp')
-    
+
     # Run trained model forecast (2-hour trajectory = 24 timesteps ahead)
     pred_res = engine.run_glucose_prediction(patient_id)
     predictions = pred_res['predicted_values']

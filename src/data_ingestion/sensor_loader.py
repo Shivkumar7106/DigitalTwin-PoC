@@ -13,29 +13,42 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SensorLoader:
-    """Loads time-series sensor data from CSV files."""
+    """Loads time-series sensor data from CSV files with high-performance in-memory caching."""
 
     def __init__(self, data_dir: str = 'data/raw/sensors'):
         """Initialize the loader with the directory containing sensor data."""
         self.data_dir = data_dir
+        self._cache: Dict[str, pd.DataFrame] = {}
+        self._patient_slices: Dict[str, Dict[str, pd.DataFrame]] = {}
 
     def _load_sensor_file(self, filename: str, patient_id: str = None) -> pd.DataFrame:
-        """Helper to load sensor data and optionally filter by patient."""
-        filepath = os.path.join(self.data_dir, filename)
-        if not os.path.exists(filepath):
-            logger.warning(f"Sensor file not found: {filepath}")
-            return pd.DataFrame()
-        try:
-            df = pd.read_csv(filepath)
-            if 'timestamp' in df.columns:
-                df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
-                df = df.sort_values('timestamp')
-            if patient_id and 'patient_id' in df.columns:
-                df = df[df['patient_id'] == patient_id]
+        """Helper to load sensor data with caching and fast patient-slice retrieval."""
+        if filename not in self._cache:
+            filepath = os.path.join(self.data_dir, filename)
+            if not os.path.exists(filepath):
+                logger.warning(f"Sensor file not found: {filepath}")
+                self._cache[filename] = pd.DataFrame()
+            else:
+                try:
+                    df = pd.read_csv(filepath)
+                    if 'timestamp' in df.columns:
+                        df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
+                        df = df.sort_values('timestamp')
+                    self._cache[filename] = df
+                except Exception as e:
+                    logger.error(f"Error loading sensor file {filepath}: {e}")
+                    self._cache[filename] = pd.DataFrame()
+
+        df = self._cache[filename]
+        if df.empty or not patient_id or 'patient_id' not in df.columns:
             return df
-        except Exception as e:
-            logger.error(f"Error loading sensor file {filepath}: {e}")
-            return pd.DataFrame()
+
+        if filename not in self._patient_slices:
+            self._patient_slices[filename] = {}
+        if patient_id not in self._patient_slices[filename]:
+            self._patient_slices[filename][patient_id] = df[df['patient_id'] == patient_id].copy()
+
+        return self._patient_slices[filename][patient_id]
 
     def load_cgm_data(self, patient_id: str = None) -> pd.DataFrame:
         """Load CGM data, optionally filter by patient."""

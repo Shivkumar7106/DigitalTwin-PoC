@@ -55,22 +55,25 @@ def render_patient_overview(engine, patient_id: str):
     st.subheader("Latest Longitudinal Laboratory Panels")
     obs_list = med_hist.get('observations', [])
     if obs_list:
-        # Group by observation_name and show latest
-        obs_df = pd.DataFrame(obs_list)
-        name_col = 'observation_name' if 'observation_name' in obs_df.columns else 'name'
-        date_col = 'observation_date' if 'observation_date' in obs_df.columns else 'date'
-        val_col = 'value'
-        unit_col = 'unit' if 'unit' in obs_df.columns else None
-        
-        latest_obs = obs_df.sort_values(date_col).groupby(name_col).last().reset_index()
-        display_rows = []
-        for _, row in latest_obs.iterrows():
-            unit_str = f" {row[unit_col]}" if unit_col and pd.notna(row[unit_col]) else ""
-            display_rows.append({
-                "Test / Biomarker": row[name_col],
-                "Latest Value": f"{row[val_col]}{unit_str}",
-                "Date": str(row[date_col])[:10]
-            })
+        latest_map = {}
+        for row in obs_list:
+            name = row.get('observation_name') or row.get('name')
+            date = str(row.get('observation_date') or row.get('date', ''))
+            if not name:
+                continue
+            if name not in latest_map or date >= latest_map[name]['_raw_date']:
+                unit = row.get('unit')
+                unit_str = f" {unit}" if unit and pd.notna(unit) else ""
+                latest_map[name] = {
+                    "Test / Biomarker": name,
+                    "Latest Value": f"{row.get('value')}{unit_str}",
+                    "Date": date[:10],
+                    "_raw_date": date
+                }
+        display_rows = [
+            {"Test / Biomarker": v["Test / Biomarker"], "Latest Value": v["Latest Value"], "Date": v["Date"]}
+            for v in latest_map.values()
+        ]
         st.table(pd.DataFrame(display_rows))
     else:
         st.info("No laboratory panel records available for this patient.")

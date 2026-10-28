@@ -17,15 +17,22 @@ class EHRLoader:
     def __init__(self, data_dir: str = 'data/raw/ehr'):
         """Initialize the loader with the directory containing EHR CSV files."""
         self.data_dir = data_dir
+        self._csv_cache: Dict[str, pd.DataFrame] = {}
+        self._profile_cache: Dict[str, Dict[str, Any]] = {}
 
     def _load_csv(self, filename: str) -> pd.DataFrame:
-        """Helper method to load a CSV file, with error handling."""
+        """Helper method to load a CSV file, with in-memory caching."""
+        if filename in self._csv_cache:
+            return self._csv_cache[filename].copy()
+
         filepath = os.path.join(self.data_dir, filename)
         if not os.path.exists(filepath):
             logger.error(f"File not found: {filepath}")
             raise FileNotFoundError(f"File not found: {filepath}")
         try:
-            return pd.read_csv(filepath)
+            df = pd.read_csv(filepath)
+            self._csv_cache[filename] = df
+            return df.copy()
         except Exception as e:
             logger.error(f"Error reading {filepath}: {e}")
             raise
@@ -72,7 +79,9 @@ class EHRLoader:
         return df
 
     def get_patient_profile(self, patient_id: str) -> Dict[str, Any]:
-        """Return complete profile for one patient."""
+        """Return complete profile for one patient with caching."""
+        if patient_id in self._profile_cache:
+            return self._profile_cache[patient_id]
         try:
             patients = self.load_patients()
             conditions = self.load_conditions()
@@ -89,6 +98,7 @@ class EHRLoader:
                 'observations': observations[observations['patient_id'] == patient_id].to_dict('records') if 'patient_id' in observations.columns else [],
                 'medications': medications[medications['patient_id'] == patient_id].to_dict('records') if 'patient_id' in medications.columns else []
             }
+            self._profile_cache[patient_id] = profile
             return profile
         except Exception as e:
             logger.error(f"Error getting patient profile for {patient_id}: {e}")

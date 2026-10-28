@@ -25,6 +25,9 @@ class DigitalTwinEngine:
         
         self.active_twins: Dict[str, PatientDigitalTwin] = {}
         self.alert_system = AlertSystem()
+        self._glucose_pred_cache: Dict[str, dict] = {}
+        self._cardio_risk_cache: Dict[str, dict] = {}
+        self._patient_alerts_cache: Dict[str, List[Any]] = {}
         
         # Load trained models
         self.glucose_model = None
@@ -179,8 +182,11 @@ class DigitalTwinEngine:
             'profile': profile
         }
 
-    def run_glucose_prediction(self, patient_id: str) -> dict:
-        """Run glucose predictor model using patient historical sensor buffer."""
+    def run_glucose_prediction(self, patient_id: str, force_refresh: bool = False) -> dict:
+        """Run glucose predictor model using patient historical sensor buffer with caching."""
+        if not force_refresh and patient_id in self._glucose_pred_cache:
+            return self._glucose_pred_cache[patient_id]
+
         twin = self.active_twins.get(patient_id)
         if not twin:
             twin = self.initialize_twin(patient_id)
@@ -211,7 +217,10 @@ class DigitalTwinEngine:
                     meal, exercise, hour_feat
                 ])
                 x_input = np.expand_dims(feature_mat, axis=0) # (1, 72, 8)
-                pred_raw = self.glucose_model.predict(x_input, verbose=0)[0]
+                if callable(self.glucose_model):
+                    pred_raw = self.glucose_model(x_input, training=False).numpy()[0]
+                else:
+                    pred_raw = self.glucose_model.predict(x_input, verbose=0)[0]
                 
                 # Autoregressive baseline alignment to maintain continuity with current glucose
                 base_val = g[-1]
@@ -241,15 +250,20 @@ class DigitalTwinEngine:
         new_risk.last_updated = datetime.now()
 
         twin.update_risk_scores(new_risk)
-        return {
+        res = {
             'predicted_values': predictions,
             'confidence_lower': conf_lower,
             'confidence_upper': conf_upper,
             'spike_risk': new_risk.glucose_spike_risk
         }
+        self._glucose_pred_cache[patient_id] = res
+        return res
 
-    def run_cardio_risk_assessment(self, patient_id: str) -> dict:
-        """Run standard clinical Framingham/ASCVD calculation with wearable biomarker telemetry."""
+    def run_cardio_risk_assessment(self, patient_id: str, force_refresh: bool = False) -> dict:
+        """Run standard clinical Framingham/ASCVD calculation with wearable biomarker telemetry and caching."""
+        if not force_refresh and patient_id in self._cardio_risk_cache:
+            return self._cardio_risk_cache[patient_id]
+
         twin = self.active_twins.get(patient_id)
         if not twin:
             twin = self.initialize_twin(patient_id)
@@ -326,11 +340,13 @@ class DigitalTwinEngine:
         }
 
         twin.update_risk_scores(new_risk)
-        return {
+        res = {
             'cardiovascular_risk': cvd_risk_pct,
             'risk_category': cat,
             'contributions': contributions
         }
+        self._cardio_risk_cache[patient_id] = res
+        return res
 
     def run_what_if(self, patient_id: str, changes: dict) -> dict:
         """Run patient-specific counterfactual what-if simulation."""
@@ -395,11 +411,25 @@ class DigitalTwinEngine:
             }
         }
 
-    def get_patient_alerts(self, patient_id: str) -> List[Any]:
-        """Return real evaluated alerts for patient."""
+    def get_patient_alerts(self, patient_id: str, force_refresh: bool = False) -> List[Any]:
+        """Return real evaluated alerts for patient with caching."""
+        if not force_refresh and patient_id in self._patient_alerts_cache:
+            return self._patient_alerts_cache[patient_id]
         twin = self.initialize_twin(patient_id)
         # Evaluate fresh alerts
         alerts = self.alert_system.check_all_alerts(patient_id, twin.current_vitals, twin.current_risk)
         for a in alerts:
             twin.add_alert(a)
-        return twin.get_active_alerts()
+        res = twin.get_active_alerts()
+        self._patient_alerts_cache[patient_id] = res
+        return res
+
+    def warmup(self, patient_id: str):
+        """Preload models, sensor streams, and prediction buffers for zero-latency dashboard navigation."""
+        try:
+            self.initialize_twin(patient_id)
+            self.run_glucose_prediction(patient_id)
+            self.run_cardio_risk_assessment(patient_id)
+            self.get_patient_alerts(patient_id)
+        except Exception:
+            pass

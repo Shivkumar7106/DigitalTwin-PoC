@@ -67,8 +67,6 @@ def render_cardio_risk(engine, patient_id: str):
     st.subheader("Continuous Hemodynamic & Wearable Telemetry")
     hr_df = engine.sensor_loader.load_heart_rate_data(patient_id)
     if not hr_df.empty:
-        hr_df['timestamp'] = pd.to_datetime(hr_df['timestamp'])
-        hr_df = hr_df.sort_values('timestamp')
         recent_hr = hr_df.tail(288) # Last 24-48 hours of 1-minute data subsampled
         sampled_hr = recent_hr.iloc[::5] # Subsample every 5 mins for responsive chart
         
