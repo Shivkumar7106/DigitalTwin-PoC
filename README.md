@@ -202,8 +202,8 @@ The Digital Twin processes these streams through AI/ML models to:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/digital-twin-poc.git
-cd digital-twin-poc
+git clone https://github.com/Shivkumar7106/DigitalTwin-PoC.git
+cd DigitalTwin-PoC
 
 # 2. Create virtual environment (recommended)
 python -m venv venv
